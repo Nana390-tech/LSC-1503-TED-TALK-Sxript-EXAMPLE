@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TED Talk Example Script – Kindness Can Change the World</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:      #E62B1E;
+    --coral:    #F05A3A;
+    --amber:    #F5A623;
+    --gold:     #c9a03e;
+    --cream:    #FDF8F2;
+    --warm:     #FAF0E2;
+    --parchment:#F2E8D4;
+    --ink:      #1A1108;
+    --brown:    #5C3D1E;
+    --muted:    #8A7060;
+    --border:   #E4D4BC;
+ 
+    /* Section accent colours */
+    --hook-c:   #E62B1E;
+    --story-c:  #D4621A;
+    --idea1-c:  #C97E14;
+    --idea2-c:  #7A9E4E;
+    --idea3-c:  #3A8EA0;
+    --close-c:  #8B4FAF;
+    --visual-c: #3A6BAF;
+ 
+    --annotation-bg: #FFFBEB;
+    --annotation-bd: #F5A623;
+  }
+ 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+ 
+  /* ─── HEADER ─── */
+  .page-header {
+    background: linear-gradient(135deg, #1A0A00 0%, #3D1A00 40%, #6B3010 100%);
+    padding: 56px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% -20%, rgba(245,166,35,0.22) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, var(--red) 20%, var(--amber) 50%, var(--red) 80%, transparent 100%);
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    color: #fff;
+    line-height: 1.15;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+  .page-header h1 em {
+    color: var(--amber);
+    font-style: italic;
+  }
+  .page-header .subtitle {
+    color: rgba(255,255,255,0.65);
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-bottom: 32px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 400;
+  }
+ 
+  /* ─── HOW TO USE BANNER ─── */
+  .how-to-use {
+    background: linear-gradient(135deg, #FFF8EE, #FFF0D4);
+    border-bottom: 2px solid var(--border);
+    padding: 24px 40px;
+  }
+  .how-to-use-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .how-icon { font-size: 32px; padding-top: 4px; }
+  .how-to-use h3 { font-size: 14px; font-weight: 600; color: var(--brown); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .how-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .how-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: var(--brown);
+  }
+  .how-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+ 
+  /* ─── MAIN LAYOUT ─── */
+  .page-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+ 
+  /* ─── SECTION CARDS ─── */
+  .section-card {
+    margin-bottom: 40px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(90,40,0,0.08);
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+ 
+  .section-header {
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: filter 0.2s;
+  }
+  .section-header:hover { filter: brightness(0.96); }
+ 
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .section-label-pill {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    flex: 1;
+  }
+  .section-time {
+    background: rgba(0,0,0,0.2);
+    color: rgba(255,255,255,0.85);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 12px;
+  }
+  .chevron {
+    color: rgba(255,255,255,0.7);
+    font-size: 18px;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .section-card.open .chevron { transform: rotate(180deg); }
+ 
+  .section-body {
+    display: none;
+    padding: 0;
+  }
+  .section-card.open .section-body { display: block; }
+ 
+  /* ─── SCRIPT + ANNOTATION LAYOUT ─── */
+  .script-annotation-wrap {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 0;
+  }
+  @media (max-width: 780px) {
+    .script-annotation-wrap { grid-template-columns: 1fr; }
+    .annotations-col { border-left: none !important; border-top: 2px dashed var(--border); }
+  }
+ 
+  .script-col {
+    padding: 32px;
+    background: #fff;
+  }
+  .annotations-col {
+    padding: 24px 20px;
+    background: var(--annotation-bg);
+    border-left: 2px dashed var(--annotation-bd);
+  }
+ 
+  /* ─── TECHNIQUE TAG ─── */
+  .technique-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    color: #fff;
+  }
+ 
+  /* ─── STAGE DIRECTION ─── */
+  .stage-dir {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--muted);
+    font-weight: 400;
+    margin: 10px 0;
+    padding: 6px 14px;
+    border-left: 3px solid var(--border);
+    background: var(--parchment);
+    border-radius: 0 6px 6px 0;
+  }
+  .stage-dir::before { content: '🎭  '; }
+ 
+  /* ─── SCRIPT TEXT ─── */
+  .script-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .script-text strong {
+    font-weight: 600;
+    color: var(--brown);
+  }
+  .script-text em {
+    font-style: italic;
+    color: #555;
+  }
+  .script-highlight {
+    background: linear-gradient(to bottom, transparent 55%, rgba(245,166,35,0.35) 55%);
+    font-weight: 500;
+    padding: 0 2px;
+  }
+ 
+  /* ─── SCRIPT PAUSE MARK ─── */
+  .pause { color: var(--muted); font-style: italic; font-size: 13px; }
+ 
+  /* ─── ANNOTATION NOTES ─── */
+  .ann-note {
+    background: #fff;
+    border: 1px solid var(--annotation-bd);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--brown);
+  }
+  .ann-note .ann-icon { font-size: 16px; margin-bottom: 6px; display: block; }
+  .ann-note strong { color: var(--ink); display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .ann-note p { color: #5c4a35; }
+ 
+  /* ─── WORD COUNT BADGE ─── */
+  .word-count {
+    display: inline-block;
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 20px;
+  }
+ 
+  /* ─── DIVIDERS WITHIN SCRIPT ─── */
+  .script-divider {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 24px 0;
+  }
+ 
+  /* ─── IDEA BLOCK (for 3 core ideas) ─── */
+  .idea-block {
+    margin-bottom: 28px;
+  }
+  .idea-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+ 
+  /* ─── VISUAL PLAN SECTION ─── */
+  .visual-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 28px 32px;
+    background: #fff;
+  }
+  .slide-card {
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--cream);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .slide-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(90,40,0,0.12);
+  }
+  .slide-visual {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-visual::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.18));
+  }
+  .slide-info { padding: 16px; }
+  .slide-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .slide-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .slide-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+  .slide-tip {
+    font-size: 11.5px;
+    color: var(--brown);
+    background: #FFF8EE;
+    border: 1px solid #F5A62340;
+    border-radius: 6px;
+    padding: 7px 10px;
+    line-height: 1.5;
+  }
+  .slide-tip::before { content: '💡 '; }
+ 
+  /* ─── SECTION COLOUR THEMES ─── */
+  .sh-hook   { background: linear-gradient(135deg, #B01E14, #E62B1E); }
+  .sh-story  { background: linear-gradient(135deg, #8B3810, #D4621A); }
+  .sh-idea1  { background: linear-gradient(135deg, #8B5E0A, #C97E14); }
+  .sh-idea2  { background: linear-gradient(135deg, #3A6622, #7A9E4E); }
+  .sh-idea3  { background: linear-gradient(135deg, #1A5A6E, #3A8EA0); }
+  .sh-close  { background: linear-gradient(135deg, #52247A, #8B4FAF); }
+  .sh-visual { background: linear-gradient(135deg, #1A3D7A, #3A6BAF); }
+ 
+  .tag-hook   { background: var(--hook-c);  }
+  .tag-story  { background: var(--story-c); }
+  .tag-idea1  { background: var(--idea1-c); }
+  .tag-idea2  { background: var(--idea2-c); }
+  .tag-idea3  { background: var(--idea3-c); }
+  .tag-close  { background: var(--close-c); }
+ 
+  /* ─── FULL SCRIPT BUTTON ─── */
+  .controls-bar {
+    text-align: center;
+    padding: 32px 24px 0;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--red);
+    color: #fff;
+    border-color: var(--red);
+  }
+  .btn-primary:hover { background: #b01e14; border-color: #b01e14; }
+  .btn-outline {
+    background: transparent;
+    color: var(--brown);
+    border-color: var(--border);
+  }
+  .btn-outline:hover { background: var(--parchment); }
+ 
+  /* ─── FULL SCRIPT VIEW ─── */
+  .full-script-panel {
+    display: none;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    margin: 32px auto 0;
+    max-width: 760px;
+    padding: 48px 56px;
+    box-shadow: 0 4px 40px rgba(90,40,0,0.1);
+    position: relative;
+  }
+  .full-script-panel.visible { display: block; }
+  .full-script-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .full-script-panel .fs-meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+  }
+  .fs-section-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin: 24px 0 10px;
+  }
+  .full-script-panel .script-text {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+  .close-btn {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .close-btn:hover { background: #f0d8b8; }
+ 
+  /* ─── TIPS FOOTER ─── */
+  .tips-footer {
+    background: linear-gradient(135deg, #FFF8EE, #FFF0D4);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 40px 0;
+  }
+  .tips-footer h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .tip-chip {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--brown);
+  }
+  .tip-chip strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+ 
+  /* ─── FOOTER ─── */
+  .page-footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--muted);
+    font-size: 12.5px;
+    border-top: 1px solid var(--border);
+  }
+ 
+  /* ─── PRINT ─── */
+  @media print {
+    .controls-bar, .full-script-panel { display: none !important; }
+    .section-card.open .section-body { display: block !important; }
+    .section-body { display: block !important; }
+    body { background: #fff; }
+    .page-header { background: #222 !important; }
+    .script-annotation-wrap { grid-template-columns: 1fr; }
+    .annotations-col { display: none; }
+  }
+ 
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .section-card { animation: fadeSlideIn 0.4s ease both; }
+  .section-card:nth-child(1) { animation-delay: 0.05s; }
+  .section-card:nth-child(2) { animation-delay: 0.10s; }
+  .section-card:nth-child(3) { animation-delay: 0.15s; }
+  .section-card:nth-child(4) { animation-delay: 0.20s; }
+  .section-card:nth-child(5) { animation-delay: 0.25s; }
+  .section-card:nth-child(6) { animation-delay: 0.30s; }
+  .section-card:nth-child(7) { animation-delay: 0.35s; }
+ 
+  @media (max-width: 600px) {
+    .page-header { padding: 40px 24px; }
+    .how-to-use { padding: 20px 24px; }
+    .script-col { padding: 20px; }
+    .visual-grid { padding: 20px; }
+    .full-script-panel { padding: 32px 24px; }
+    .section-header { padding: 16px 20px; }
+    .section-title { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+ 
+<!-- ══════════════════════════════════════
+     PAGE HEADER
+══════════════════════════════════════ -->
+<div class="page-header">
+  <div class="header-badge">📖 LSC 1503 · Example Script</div>
+  <h1>Kindness Can<br><em>Change the World</em></h1>
+  <p class="subtitle">A fully annotated TED Talk script · Use this as your model when writing your own</p>
+  <div class="header-meta">
+    <span class="meta-pill">⏱ ~4 minutes</span>
+    <span class="meta-pill">📝 ~520 words spoken</span>
+    <span class="meta-pill">🖼 6 visual slides</span>
+    <span class="meta-pill">🎤 Speaker: Layla (fictional)</span>
+  </div>
+</div>
+ 
+<!-- ══════════════════════════════════════
+     HOW TO USE BANNER
+══════════════════════════════════════ -->
+<div class="how-to-use">
+  <div class="how-to-use-inner">
+    <div class="how-icon">📌</div>
+    <div>
+      <h3>How to use this example</h3>
+      <div class="how-grid">
+        <div class="how-item">
+          <div class="how-dot" style="background:#E62B1E;"></div>
+          <span>Read the <strong>script text</strong> on the left</span>
+        </div>
+        <div class="how-item">
+          <div class="how-dot" style="background:#F5A623;"></div>
+          <span>Read the <strong>teacher notes</strong> on the right to understand WHY it works</span>
+        </div>
+        <div class="how-item">
+          <div class="how-dot" style="background:#7A9E4E;"></div>
+          <span>Then write <strong>your own version</strong> using the TED Talk Builder app</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ══════════════════════════════════════
+     CONTROLS BAR
+══════════════════════════════════════ -->
+<div class="controls-bar">
+  <button class="btn btn-primary" onclick="expandAll()">▼ Expand All Sections</button>
+  <button class="btn btn-outline" onclick="collapseAll()">▲ Collapse All</button>
+  <button class="btn btn-outline" onclick="toggleFullScript()">📜 Read Full Script</button>
+  <button class="btn btn-outline" onclick="window.print()">🖨 Print</button>
+</div>
+ 
+<!-- ══════════════════════════════════════
+     FULL SCRIPT PANEL (hidden by default)
+══════════════════════════════════════ -->
+<div class="full-script-panel" id="fullScript">
+  <button class="close-btn" onclick="toggleFullScript()">✕</button>
+  <h2>"Kindness Can Change the World"</h2>
+  <div class="fs-meta">A model TED Talk script · LSC 1503 · Speaker: Layla · ~4 minutes</div>
+ 
+  <div class="fs-section-tag" style="background:var(--hook-c);">Hook</div>
+  <div class="script-text">
+    What if I told you that <strong>ten words</strong> saved my uncle's life?<br><br>
+    Not medicine. Not a hospital. Not a doctor.<br>
+    <em>Ten words — from a person he had never met.</em><br><br>
+    <span class="stage-dir">Pause. Look at the audience. Wait three seconds.</span>
+  </div>
+ 
+  <div class="fs-section-tag" style="background:var(--story-c);">Personal Story</div>
+  <div class="script-text">
+    Three years ago, my uncle had a very difficult time. He lost his job after fifteen years. Every day, he sat in the same chair. He did not eat much. He did not talk. He just looked at the wall. We did not know how to help him.<br><br>
+    One evening, he went alone to a small coffee shop near our house. He was very quiet — tired and sad. And then a man he had never seen before stopped at his table and said:<br><br>
+    <em>"You look like you are carrying the whole world today. I hope it gets lighter."</em><br><br>
+    That was all. Ten words. The man walked away. But my uncle told me later — those words changed something inside him. He called me that night. He smiled for the first time in months. He started to talk to a doctor. He got a new job. He got better.<br><br>
+    And I kept thinking: <span class="script-highlight">one act of kindness, from a stranger, in thirty seconds, changed everything.</span>
+  </div>
+ 
+  <div class="fs-section-tag" style="background:var(--idea1-c);">Idea 1 · Kindness Is Good for Your Brain</div>
+  <div class="script-text">
+    My first idea is this: kindness is not just a nice feeling — it is <strong>powerful.</strong><br><br>
+    Scientists found that when we do something kind, our brain makes a special chemical. This chemical makes us feel safe, happy, and connected to other people. And here is the interesting part: <em>the person who gives the kindness feels it too.</em> Not just the person who gets it. Being kind is good for both people.
+  </div>
+ 
+  <div class="fs-section-tag" style="background:var(--idea2-c);">Idea 2 · Kindness Spreads</div>
+  <div class="script-text">
+    My second idea: kindness spreads — like water in a river.<br><br>
+    Research shows that one kind act can make three, four, or five other people act kindly too — even people who were not part of the first moment. Think about the last time someone helped you, or said something nice to you. How did you feel after? Most of us want to do something kind for someone else too.<br><br>
+    That man in the coffee shop probably forgot my uncle after five minutes. But my uncle now goes every Saturday to talk with other people who are having a hard time. One kind moment — hundreds of lives touched.
+  </div>
+ 
+  <div class="fs-section-tag" style="background:var(--idea3-c);">Idea 3 · Kindness Helps Us Feel We Are Not Alone</div>
+  <div class="script-text">
+    My third idea is the most important: <strong>kindness helps people feel they are not alone.</strong><br><br>
+    Today, life is very fast. We look at our phones more than we look at each other. We walk past many people every day and say nothing. But one of the biggest problems in the world right now is not money, and it is not sickness. It is <em>loneliness</em> — feeling that nobody sees you or cares about you.<br><br>
+    Kindness is the answer. Not big, expensive kindness. I mean the small, simple things: using someone's name when you say hello, holding a door open, asking "are you okay?" and really listening to the answer. These small moments tell people: I see you. You are important.
+  </div>
+ 
+  <div class="fs-section-tag" style="background:var(--close-c);">Conclusion · Call to Action</div>
+  <div class="script-text">
+    So, I ask you one thing today — just one.<br><br>
+    In the next twenty-four hours, do one kind thing for another person. Not because someone is watching. Not because you want to share it online. Do it because somewhere — in a coffee shop, in a lift, in a classroom like this one — someone is having the hardest day of their life.<br><br>
+    And you have ten words. Use them.<br><br>
+    The world does not need us to be perfect. <span class="script-highlight">It just needs us to be kind.</span>
+  </div>
+</div>
+ 
+<!-- ══════════════════════════════════════
+     SECTION CARDS
+══════════════════════════════════════ -->
+<div class="page-body">
+ 
+  <!-- ── SECTION 1: HOOK ── -->
+  <div class="section-card open" id="s1">
+    <div class="section-header sh-hook" onclick="toggleSection('s1')">
+      <div>
+        <div class="section-number">Section 01</div>
+        <div class="section-label-pill">The Hook</div>
+      </div>
+      <div class="section-title">The Opening — Grab Them in 10 Seconds</div>
+      <span class="section-time">~30 sec</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="script-annotation-wrap">
+        <!-- SCRIPT -->
+        <div class="script-col">
+          <div class="technique-tag tag-hook">🎯 Hook Type: Rhetorical Question + Mystery</div>
+          <div class="stage-dir">Walk to centre stage. Stand still. Make eye contact. Then speak slowly.</div>
+ 
+          <div class="script-text">
+            <span class="script-highlight">What if I told you that <strong>ten words</strong> saved my uncle's life?</span><br><br>
+            Not medicine.<br>
+            Not a hospital.<br>
+            Not a doctor.<br><br>
+            <em>Ten words — from a person he had never met.</em>
+          </div>
+ 
+          <div class="stage-dir">Pause for 3 full seconds. Let the silence work for you. Do not fill it.</div>
+ 
+          <div class="word-count">⏱ Approx. 30 seconds spoken · ~45 words</div>
+        </div>
+        <!-- ANNOTATIONS -->
+        <div class="annotations-col">
+          <div class="ann-note">
+            <span class="ann-icon">💬</span>
+            <strong>Rhetorical Question</strong>
+            <p>Starting with "What if I told you…" immediately pulls the audience in. They start wondering: <em>What? How?</em> This curiosity keeps them listening.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🔢</span>
+            <strong>Specific Number</strong>
+            <p>"Ten words" is precise and intriguing. It's not "a few words" — it's ten. Numbers feel real. They create a promise to the audience.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🎭</span>
+            <strong>Rule of Three (Negative)</strong>
+            <p>"Not a doctor… Not surgery… Not a specialist." — Three negatives build tension before the reveal. The audience is now completely hooked.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">⏸</span>
+            <strong>The Power of Silence</strong>
+            <p>Pausing after your hook is one of the most powerful tools a speaker has. It gives the audience time to feel the impact. Most beginners rush — don't.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ── SECTION 2: PERSONAL STORY ── -->
+  <div class="section-card open" id="s2">
+    <div class="section-header sh-story" onclick="toggleSection('s2')">
+      <div>
+        <div class="section-number">Section 02</div>
+        <div class="section-label-pill">Personal Story</div>
+      </div>
+      <div class="section-title">The Heart — Make Them Feel, Not Just Think</div>
+      <span class="section-time">~70 sec</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="script-annotation-wrap">
+        <div class="script-col">
+          <div class="technique-tag tag-story">❤️ Story Structure: Setup → Problem → Turning Point → Lesson</div>
+ 
+          <!-- Setup -->
+          <div class="idea-block">
+            <div class="idea-label">📍 Setup — Paint the Scene</div>
+            <div class="stage-dir">Slow down. Speak quietly. This is a personal moment.</div>
+            <div class="script-text">
+              Three years ago, my uncle had a very difficult time. He lost his job — a job he had for <strong>fifteen years.</strong><br><br>
+              Every day, he sat in the same chair. He did not eat much. He did not talk. He just looked at the wall. We did not know how to help him.
+            </div>
+          </div>
+          <hr class="script-divider">
+ 
+          <!-- Turning Point -->
+          <div class="idea-block">
+            <div class="idea-label">🔁 Turning Point — The Unexpected Moment</div>
+            <div class="stage-dir">Look up. Speak clearly. This is the key scene.</div>
+            <div class="script-text">
+              One evening, he went alone to a small coffee shop near our house. He was very quiet — tired and sad.<br><br>
+              And then a man he had never seen before stopped at his table and said:<br><br>
+              <em>"You look like you are carrying the whole world today. I hope it gets lighter."</em>
+            </div>
+            <div class="stage-dir">Pause again after the quote. Let the words land.</div>
+          </div>
+          <hr class="script-divider">
+ 
+          <!-- Resolution + Bridge -->
+          <div class="idea-block">
+            <div class="idea-label">🌅 Resolution + Bridge to the Talk</div>
+            <div class="script-text">
+              That was all. Ten words. The man walked away.<br><br>
+              But my uncle told me later — those words <em>changed something inside him.</em> He called me that night. He smiled for the first time in months. He started to talk to a doctor. He got a new job. He got better.<br><br>
+              And I kept thinking: <span class="script-highlight">one act of kindness, from a stranger, in thirty seconds, changed everything.</span>
+            </div>
+          </div>
+ 
+          <div class="word-count">⏱ Approx. 70 seconds spoken · ~155 words</div>
+        </div>
+        <div class="annotations-col">
+          <div class="ann-note">
+            <span class="ann-icon">🎬</span>
+            <strong>Specific Details = Believability</strong>
+            <p>"Fifteen years." "The same chair every day." Small, specific details make the story feel real. If you say "he was sad," people don't feel it. If you show it, they do.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🗣</span>
+            <strong>Use Direct Speech</strong>
+            <p>When you say the exact words someone said (like "You look like you are carrying the whole world…"), the audience feels like they are really there in the moment.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🌊</span>
+            <strong>Show Feelings, Don't Just Say Them</strong>
+            <p>Don't say "he felt better." Instead, show what happened: "He smiled for the first time in months." This is stronger and more interesting to listen to.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🔗</span>
+            <strong>The Bridge Sentence</strong>
+            <p>The highlighted sentence connects your story to your main ideas. It helps the audience understand why your story is important. Always bridge your story to your topic.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ── SECTION 3: THREE CORE IDEAS ── -->
+  <div class="section-card open" id="s3">
+    <div class="section-header sh-idea1" onclick="toggleSection('s3')">
+      <div>
+        <div class="section-number">Section 03</div>
+        <div class="section-label-pill">Three Core Ideas</div>
+      </div>
+      <div class="section-title">The Brain — Evidence, Logic, and Insight</div>
+      <span class="section-time">~90 sec</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="script-annotation-wrap">
+        <div class="script-col">
+ 
+          <div class="idea-block">
+            <div class="technique-tag tag-idea1">💡 Idea 1 · Say It → Prove It → Connect It</div>
+            <div class="idea-label" style="color:var(--idea1-c);">🔬 Kindness Is Good for Your Brain</div>
+            <div class="stage-dir">Shift your weight. Move your body to show a new section is starting.</div>
+            <div class="script-text">
+              My first idea is this: kindness is not just a nice feeling — it is <strong>powerful.</strong><br><br>
+              Scientists found that when we do something kind, our brain makes a special chemical. This chemical makes us feel safe, happy, and close to other people.<br><br>
+              The person who gets the kindness feels good. But here is the interesting part: <span class="script-highlight">the person who <em>gives</em> the kindness feels good too.</span> Being kind is good for both people — and for your brain.
+            </div>
+          </div>
+          <hr class="script-divider">
+ 
+          <!-- IDEA 2 -->
+          <div class="idea-block">
+            <div class="technique-tag tag-idea2">🌊 Idea 2 · Comparison + Evidence + Return to Story</div>
+            <div class="idea-label" style="color:var(--idea2-c);">💧 Kindness Spreads</div>
+            <div class="stage-dir">Take one step to the side. A small move shows you are starting a new point.</div>
+            <div class="script-text">
+              My second idea: <strong>kindness spreads — like water in a river.</strong><br><br>
+              Research shows that one kind act can make three, four, or five other people act kindly too — even people who were not part of the first moment.<br><br>
+              Think about the last time someone helped you, or said something nice. How did you feel? Most of us want to do something kind for someone else too.<br><br>
+              That man in the coffee shop probably forgot my uncle after five minutes. But my uncle now goes every Saturday to talk with people who are having a hard time. <em>One kind moment. Hundreds of lives.</em>
+            </div>
+          </div>
+          <hr class="script-divider">
+ 
+          <!-- IDEA 3 -->
+          <div class="idea-block">
+            <div class="technique-tag tag-idea3">🏘 Idea 3 · Big Problem + Simple Answer</div>
+            <div class="idea-label" style="color:var(--idea3-c);">🤝 Kindness Helps Us Feel We Are Not Alone</div>
+            <div class="stage-dir">Look straight at the audience. Speak a little slower. This is your most important point.</div>
+            <div class="script-text">
+              My third idea is the most important: <strong>kindness helps people feel they are not alone.</strong><br><br>
+              Today, life moves very fast. We look at our phones more than we look at each other. We walk past many people every day and say nothing.<br><br>
+              But one of the biggest problems in the world right now is not money, and it is not sickness. It is <em>loneliness</em> — feeling that nobody sees you or cares about you.<br><br>
+              Kindness is the answer. Not big, expensive kindness. I mean small, simple things: using someone's name when you say hello, holding the door open, asking <em>"are you okay?"</em> and really listening to the answer.<br><br>
+              <span class="script-highlight">These small moments tell people: I see you. You are important.</span>
+            </div>
+          </div>
+ 
+          <div class="word-count">⏱ Approx. 90 seconds spoken · ~220 words</div>
+        </div>
+        <div class="annotations-col">
+          <div class="ann-note">
+            <span class="ann-icon">🏗</span>
+            <strong>Say It → Prove It → Connect It</strong>
+            <p>Every idea has three steps: (1) Say your point clearly. (2) Prove it with facts or a story. (3) Connect it to the audience's life. This makes your ideas easy to follow and remember.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🔬</span>
+            <strong>Using Science Simply</strong>
+            <p>You do not need to remember difficult words. "Scientists found…" or "Research shows…" is enough. The important thing is to explain the idea clearly in simple language.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">💬</span>
+            <strong>Include Your Audience</strong>
+            <p>"Think about the last time someone helped you…" — This question makes the audience part of your talk. They are no longer just listening. They are thinking about their own life.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🎯</span>
+            <strong>Why Three Ideas?</strong>
+            <p>Three is the best number of main points. Two is not enough. Four or more is too many — people forget. Three ideas, clearly introduced ("My first…", "My second…", "My third…"), help the audience follow you.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🌍</span>
+            <strong>Name a Real Problem</strong>
+            <p>When you name a problem that many people know — like loneliness — the audience listens more carefully. It makes your talk feel important and real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ── SECTION 4: CONCLUSION ── -->
+  <div class="section-card open" id="s4">
+    <div class="section-header sh-close" onclick="toggleSection('s4')">
+      <div>
+        <div class="section-number">Section 04</div>
+        <div class="section-label-pill">Conclusion</div>
+      </div>
+      <div class="section-title">The Ending — A Call That Echoes</div>
+      <span class="section-time">~40 sec</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="script-annotation-wrap">
+        <div class="script-col">
+          <div class="technique-tag tag-close">🎤 Technique: Call to Action + Emotional Final Statement</div>
+ 
+          <!-- Call to Action -->
+          <div class="idea-block">
+            <div class="idea-label" style="color:var(--close-c);">📣 Call to Action — One Clear Request</div>
+            <div class="stage-dir">Return to centre. Stand still. Speak slower than you have at any point in the talk.</div>
+            <div class="script-text">
+              So, I ask you one thing today — just <strong>one thing.</strong><br><br>
+              In the next twenty-four hours, do one kind thing for another person.<br><br>
+              Not because someone is watching. Not because you want to share it online.<br>
+              Do it because somewhere — in a small coffee shop, in a lift, in a classroom like this one — someone is having the hardest day of their life.<br><br>
+              And you have ten words. <span class="script-highlight">Use them.</span>
+            </div>
+          </div>
+          <hr class="script-divider">
+ 
+          <!-- Emotional Closing -->
+          <div class="idea-block">
+            <div class="idea-label" style="color:var(--close-c);">💜 Emotional Closing Statement</div>
+            <div class="stage-dir">Pause before this final line. Make it feel like a gift.</div>
+            <div class="script-text">
+              The world does not need us to be perfect.<br><br>
+              <span class="script-highlight">It just needs us to be kind.</span>
+            </div>
+            <div class="stage-dir">Nod gently. Step back. You are finished. Do not say "thank you" — let your words be the ending.</div>
+          </div>
+ 
+          <div class="word-count">⏱ Approx. 40 seconds spoken · ~100 words</div>
+        </div>
+        <div class="annotations-col">
+          <div class="ann-note">
+            <span class="ann-icon">🎯</span>
+            <strong>One Clear Action</strong>
+            <p>The best calls to action are simple and possible. "One kind act in 24 hours" is something anyone can do. Do not say "change the world" — it is too big. Give people one small, clear step.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🔄</span>
+            <strong>Go Back to the Hook</strong>
+            <p>"You have ten words. Use them." — This brings back the "ten words" from the beginning of the talk. When you connect the end to the start, the talk feels complete and well-planned.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">💎</span>
+            <strong>The Last Line</strong>
+            <p>"It just needs us to be kind." — Short. Simple. Easy to remember. A good last line is not long or difficult. It is a sentence that stays in people's minds after the talk.</p>
+          </div>
+          <div class="ann-note">
+            <span class="ann-icon">🎭</span>
+            <strong>How to Finish</strong>
+            <p>After your last words, step back and nod. Do NOT say "thank you" or "that's the end." Let your words finish the talk. Silence after the last line is very powerful.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ── SECTION 5: VISUAL AID PLAN ── -->
+  <div class="section-card open" id="s5">
+    <div class="section-header sh-visual" onclick="toggleSection('s5')">
+      <div>
+        <div class="section-number">Section 05</div>
+        <div class="section-label-pill">Visual Plan</div>
+      </div>
+      <div class="section-title">Images & Slides — What Your Audience Sees</div>
+      <span class="section-time">6 slides</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="section-body">
+ 
+      <!-- Key Rule Banner -->
+      <div style="background:linear-gradient(135deg,#1A3D7A,#3A6BAF);padding:20px 32px;color:#fff;font-size:14px;line-height:1.7;">
+        <strong style="font-size:16px;display:block;margin-bottom:6px;">The Most Important Rule for TED Talk Slides:</strong>
+        Your slides are <em>not</em> your script. They show the feeling behind your words. Use one image per slide. Use very little text — or no text at all. The audience should be <strong>listening to you</strong>, not reading your screen.
+      </div>
+ 
+      <div class="visual-grid">
+ 
+        <!-- Slide 1 -->
+        <div class="slide-card">
+          <div class="slide-visual" style="background:linear-gradient(135deg,#2C1810,#8B3010);">🤝</div>
+          <div class="slide-info">
+            <div class="slide-num">Slide 1 · Hook</div>
+            <div class="slide-name">Two Hands — One Reaching Out</div>
+            <div class="slide-desc">A warm, close-up photo of one hand gently touching another. No faces needed. The image should feel intimate and human.</div>
+            <div class="slide-tip">Search: "helping hand warmth close up" on Unsplash or Pexels. Choose warm tones — amber, golden light.</div>
+          </div>
+        </div>
+ 
+        <!-- Slide 2 -->
+        <div class="slide-card">
+          <div class="slide-visual" style="background:linear-gradient(135deg,#1A0800,#5C2800);">☕</div>
+          <div class="slide-info">
+            <div class="slide-num">Slide 2 · Personal Story</div>
+            <div class="slide-name">An Empty Coffee Cup, Warm Light</div>
+            <div class="slide-desc">A moody, warm café shot — a table with a cup, soft light in the background. It sets the scene without showing anyone's face.</div>
+            <div class="slide-tip">Search: "coffee shop quiet warm light" on Unsplash. No logos. No text. Just atmosphere.</div>
+          </div>
+        </div>
+ 
+        <!-- Slide 3 -->
+        <div class="slide-card">
+          <div class="slide-visual" style="background:linear-gradient(135deg,#0A2E1A,#1A7A46);">🧠</div>
+          <div class="slide-info">
+            <div class="slide-num">Slide 3 · Idea 1 (Science)</div>
+            <div class="slide-name">Simple Graphic: "Kindness → Oxytocin → Connection"</div>
+            <div class="slide-desc">Create a simple 3-word flow diagram in Canva or PowerPoint. White text on a dark background. Nothing else.</div>
+            <div class="slide-tip">This is the ONE slide where a little text works — because it IS the key data. Keep it to 5 words maximum.</div>
+          </div>
+        </div>
+ 
+        <!-- Slide 4 -->
+        <div class="slide-card">
+          <div class="slide-visual" style="background:linear-gradient(135deg,#0A1E2E,#1A4A7A);">🌊</div>
+          <div class="slide-info">
+            <div class="slide-num">Slide 4 · Idea 2 (Ripple)</div>
+            <div class="slide-name">Water Ripple, Top-Down View</div>
+            <div class="slide-desc">An overhead photo of a single water droplet creating ripples. Symbolic. Instantly communicates the idea of kindness spreading outward.</div>
+            <div class="slide-tip">Search: "water ripple top view" on Pexels. Make it full-screen with no text — you explain it with your voice.</div>
+          </div>
+        </div>
+ 
+        <!-- Slide 5 -->
+        <div class="slide-card">
+          <div class="slide-visual" style="background:linear-gradient(135deg,#1A0E2E,#4A2870);">🏘</div>
+          <div class="slide-info">
+            <div class="slide-num">Slide 5 · Idea 3 (Belonging)</div>
+            <div class="slide-name">A Circle of People — Community</div>
+            <div class="slide-desc">An image of people sitting together, laughing or talking — seen from above or at a distance. Represents belonging and connection.</div>
+            <div class="slide-tip">Avoid stock-photo-looking images. Choose candid, natural photos. Search: "community people together candid" on Unsplash.</div>
+          </div>
+        </div>
+ 
+        <!-- Slide 6 -->
+        <div class="slide-card">
+          <div class="slide-visual" style="background:linear-gradient(135deg,#2A0040,#7A2090);">💜</div>
+          <div class="slide-info">
+            <div class="slide-num">Slide 6 · Conclusion</div>
+            <div class="slide-name">One Line of Text on a Dark Slide</div>
+            <div class="slide-desc">Your final slide shows only your closing statement: "The world just needs us to be kind." Large font. Centred. Nothing else.</div>
+            <div class="slide-tip">Use a beautiful font (Playfair Display, Lora, or Georgia). Leave generous empty space around the text. Simplicity = power.</div>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ══════════════════════════════════════
+       WRITING TIPS FOOTER
+  ══════════════════════════════════════ -->
+  <div class="tips-footer">
+    <h3>✍️ Now It's Your Turn — Key Reminders</h3>
+    <div class="tips-grid">
+      <div class="tip-chip">
+        <strong>Hook</strong>
+        Start with a question, a surprising fact, a quote, or a micro-story. Never say "Good morning" or "My topic is…"
+      </div>
+      <div class="tip-chip">
+        <strong>Personal Story</strong>
+        Use your own experience. Specific details, real emotions, real dialogue. Audiences connect to people — not ideas.
+      </div>
+      <div class="tip-chip">
+        <strong>Idea 1</strong>
+        State it clearly. Prove it (evidence, example, stat). Connect it to their life. Keep it to 30 seconds.
+      </div>
+      <div class="tip-chip">
+        <strong>Idea 2</strong>
+        Signpost it: "My second idea…" Use an analogy — compare your idea to something they already know.
+      </div>
+      <div class="tip-chip">
+        <strong>Idea 3</strong>
+        Make it feel like the most important one. Slow down. Look at the audience. This is your emotional peak.
+      </div>
+      <div class="tip-chip">
+        <strong>Call to Action</strong>
+        One clear, specific, achievable thing. Not "be a better person" — give them a real step they can take today.
+      </div>
+      <div class="tip-chip">
+        <strong>Closing Line</strong>
+        Write it first. Make it short. Make it quotable. Practise saying it until it feels completely natural.
+      </div>
+      <div class="tip-chip">
+        <strong>Slides</strong>
+        One image per slide. No bullet points. No paragraphs. Your voice carries the information — your slide carries the emotion.
+      </div>
+    </div>
+  </div>
+ 
+</div><!-- end page-body -->
+ 
+<!-- ══════════════════════════════════════
+     PAGE FOOTER
+══════════════════════════════════════ -->
+<div class="page-footer">
+  LSC 1503 · Professional Spoken Communication · Higher Colleges of Technology · Example Script for Student Reference
+</div>
+ 
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+  function toggleSection(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+ 
+  function expandAll() {
+    document.querySelectorAll('.section-card').forEach(c => c.classList.add('open'));
+  }
+ 
+  function collapseAll() {
+    document.querySelectorAll('.section-card').forEach(c => c.classList.remove('open'));
+  }
+ 
+  function toggleFullScript() {
+    const panel = document.getElementById('fullScript');
+    panel.classList.toggle('visible');
+    if (panel.classList.contains('visible')) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+</script>
+ 
+</body>
+</html>
+ 
